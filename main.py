@@ -112,12 +112,12 @@ def DFA(keywords,msg):
             return result_txt
 
 
-    if __name__ == '__main__':
-      dfa = DFAUtils(word_warehouse=word_warehouse)
-      # 待检测的文本
-      msg = msg
-      global result
-      result = dfa.replace_match_word(msg)
+
+    dfa = DFAUtils(word_warehouse=word_warehouse)
+    # 待检测的文本
+    msg = msg
+    global result
+    result = dfa.replace_match_word(msg)
 
 
 file = open('quert.txt',mode='r',encoding='utf-8')
