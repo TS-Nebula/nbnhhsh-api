@@ -119,17 +119,16 @@ def DFA(keywords,msg):
     global result
     result = dfa.replace_match_word(msg)
 
-
-file = open('quert.txt',mode='r',encoding='utf-8')
-content = file.readlines() 
-file.close()
-content=[x.strip() for x in content]
-
 @app.route('/api/search/<request>')
 def api(request):
+   file = open('quert.txt',mode='r',encoding='utf-8')   
+   content = file.readlines() 
+   file.close()
+   content=[x.strip() for x in content]
    global frequency
    frequency = frequency + 1
    existence = request in content
+
    
    if existence == False:
       try:
@@ -142,9 +141,15 @@ def api(request):
          official_api = str(official_api)
          official_api = official_api.replace("['","")
          official_api = official_api.replace("', '", " ")
-         official_api = official_api.replace("']", "")
-         DFA(word_warehouse,official_api)
+         result = official_api.replace("']", "")
+         # 这里是敏感词屏蔽，不需要的话可以不开
+         #DFA(word_warehouse,official_api)
+
+         save = open('quert.txt',mode='a+',encoding='utf-8')
+         save.write('\n%s'%request)
+         save.write('\n%s'%result) 
          return '%s' % result
+
       except:
          return '暂无数据'
    else:
